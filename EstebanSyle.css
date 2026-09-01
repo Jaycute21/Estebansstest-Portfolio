@@ -1,9 +1,4 @@
-/* =========================================================
-   MY TREASURE — theme tokens
-   Concept: a personal "keepsake vault" for schoolwork.
-   Quiz / Exam / Activity are treated like three gem tones
-   kept in the same case.
-   ========================================================= */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
@@ -17,16 +12,16 @@ body[data-theme="light"] {
   --border-soft: rgba(22, 32, 27, 0.12);
   --border-strong: rgba(22, 32, 27, 0.22);
 
-  --accent: #1E6F52;        /* emerald — brand */
+  --accent: #1E6F52;       
   --accent-ink: #0F4433;
-  --gold: #B8842A;          /* antique gold — highlight */
+  --gold: #B8842A;        
 
   --quiz: #1E6F52;
   --exam: #A23B4C;
   --activity: #2E5A8F;
 
   --danger: #B23B32;
-  --danger-ink: #7C2A24;
+  --danger-ink: #0c0808;
 
   --shadow-sm: 0 2px 8px rgba(22, 32, 27, 0.06);
   --shadow-md: 0 10px 28px rgba(22, 32, 27, 0.10);
@@ -60,9 +55,6 @@ body[data-theme="dark"] {
   --overlay: rgba(4, 6, 5, 0.68);
 }
 
-/* =========================================================
-   Base
-   ========================================================= */
 
 * { box-sizing: border-box; }
 
@@ -104,9 +96,6 @@ button, input, select {
   }
 }
 
-/* =========================================================
-   Nav
-   ========================================================= */
 
 nav {
   position: sticky;
@@ -184,9 +173,7 @@ nav .left {
 body[data-theme="light"] #theme-toggle .icon-light { display: none; }
 body[data-theme="dark"] #theme-toggle .icon-dark { display: none; }
 
-/* =========================================================
-   Layout shells
-   ========================================================= */
+
 
 main {
   max-width: 1080px;
@@ -211,9 +198,6 @@ main {
   gap: 12px;
 }
 
-/* =========================================================
-   Home — hero & profile section adjustments
-   ========================================================= */
 
 .profile-wrap {
   background: var(--card);
@@ -234,7 +218,7 @@ main {
   line-height: 1.1;
 }
 
-/* Profile Avatar Block Container */
+
 .profile-avatar-block {
   display: flex;
   flex-direction: column;
@@ -242,7 +226,7 @@ main {
   text-align: center;
 }
 
-/* Avatar without any border color */
+
 .avatar {
   width: 130px;
   height: 130px;
@@ -265,7 +249,7 @@ main {
 
 .avatar img.show { opacity: 1; }
 
-/* Fixed Spacing for Name and Section Line */
+
 .profile-avatar-block h2.profile-name {
   margin-top: 14px;
   margin-bottom: 4px;
@@ -291,7 +275,7 @@ main {
   line-height: 1.55;
 }
 
-/* Stat cards */
+
 .stats-container {
   display: flex;
   gap: 20px;
@@ -357,9 +341,6 @@ footer {
   color: var(--muted);
 }
 
-/* =========================================================
-   Quiz / Exam / Activity grid
-   ========================================================= */
 
 .quiz-grid {
   display: grid;
@@ -440,7 +421,7 @@ footer {
   padding-top: 12px;
 }
 
-/* Styled File Input & Upload Button (Dynamic tone matching card/badge color) */
+
 .file-input {
   width: 100%;
   padding: 8px 10px;
@@ -503,9 +484,7 @@ footer {
 
 .quiz-grid p { color: var(--muted); font-size: 14px; }
 
-/* =========================================================
-   Floating add button
-   ========================================================= */
+
 
 #add-quiz-btn {
   display: none;
@@ -533,9 +512,7 @@ footer {
   background: var(--accent-ink);
 }
 
-/* =========================================================
-   Modals
-   ========================================================= */
+
 
 .modal {
   display: none;
@@ -678,9 +655,6 @@ footer {
 
 .confirm-btn-ok.ok-match:hover { background: var(--accent-ink); border-color: var(--accent-ink); }
 
-/* =========================================================
-   Image preview modal & Top-Right Close Button Fix
-   ========================================================= */
 
 #image-modal {
   display: none;
@@ -746,9 +720,7 @@ footer {
   margin: auto;
 }
 
-/* =========================================================
-   Responsive
-   ========================================================= */
+
 
 @media (max-width: 720px) {
   nav { padding: 16px 20px; }
