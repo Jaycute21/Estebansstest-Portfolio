@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
+// Explicitly serve your portfolio HTML file at the root URL
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'EstebanCS3B.html'));
+});
+
 // Ensure the 'uploads' directory exists
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
