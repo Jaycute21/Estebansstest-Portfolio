@@ -25,13 +25,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Database connection
+// Database connection using environment variables with local fallbacks
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'admin123',
-  database: 'study_hub',
-  port: 3306
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'admin123',
+  database: process.env.DB_NAME || 'study_hub',
+  port: process.env.DB_PORT || 3306
 });
 
 db.connect(err => {
@@ -52,7 +52,9 @@ app.post('/api/quizzes/:id/upload', upload.single('image'), (req, res) => {
   const quizId = req.params.id;
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
-  const newImageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+  // Dynamically generate the correct URL based on the live environment (Render or Localhost)
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  const newImageUrl = `${baseUrl}/uploads/${req.file.filename}`;
 
   // 1. Fetch current images first
   db.query('SELECT image_url FROM quizzes WHERE id = ?', [quizId], (err, rows) => {
@@ -80,9 +82,7 @@ app.post('/api/quizzes/:id/upload', upload.single('image'), (req, res) => {
   });
 });
 
-// PUT ROUTE: Update the image_url array (used to remove a SINGLE photo
-// while keeping the rest). The frontend sends the already-trimmed
-// array as a JSON string in { image_url }, and we just save it as-is.
+// PUT ROUTE: Update the image_url array
 app.put('/api/quizzes/:id/photo', (req, res) => {
   const quizId = req.params.id;
   const { image_url } = req.body;
@@ -143,4 +143,6 @@ app.post('/api/quizzes', (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log('Server running on http://localhost:5000')); 
+// Use Render's dynamic port or default to 5000 locally
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
