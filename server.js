@@ -31,13 +31,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Database connection using environment variables with local fallbacks
+// Database connection using environment variables with local fallbacks and SSL for Aiven cloud
 const db = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'admin123',
   database: process.env.DB_NAME || 'study_hub',
-  port: process.env.DB_PORT || 3306
+  port: process.env.DB_PORT || 3306,
+  ssl: { rejectUnauthorized: false }
 });
 
 db.connect(err => {
@@ -149,6 +150,6 @@ app.post('/api/quizzes', (req, res) => {
   });
 });
 
-// Use Render's dynamic port or default to 5000 locally
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
