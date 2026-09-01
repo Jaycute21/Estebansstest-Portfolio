@@ -67,12 +67,7 @@ if (themeBtn) {
 // Initial render for theme avatar photo
 applyAvatarForTheme();
 
-// ---------------------------------------------------------------
-// ---------- Custom Confirm / Alert Modal (theme-aware) ----------
-// Replaces every window.alert(...) and window.confirm(...) call.
-// It reuses the app's existing --bg / --fg / --border-soft CSS
-// variables, so it automatically matches light and dark mode.
-// ---------------------------------------------------------------
+
 const confirmModal = document.getElementById('confirm-modal');
 const confirmTitleEl = document.getElementById('confirm-title');
 const confirmMessageEl = document.getElementById('confirm-message');
@@ -80,19 +75,7 @@ const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
 const confirmOkBtn = document.getElementById('confirm-ok-btn');
 const closeConfirmModalBtn = document.getElementById('close-confirm-modal');
 
-/**
- * Shows the custom modal and resolves a Promise<boolean> once the
- * user picks an option.
- * - resolve(true)  -> user pressed the primary/OK button
- * - resolve(false) -> user pressed Cancel or the "x" (or backdrop)
- *
- * options:
- *   title       (string)  heading text
- *   message     (string)  body text
- *   okText      (string)  label for the primary button
- *   cancelText  (string)  label for the cancel button
- *   showCancel  (bool)    false = single-button "alert" style modal
- */
+
 function showConfirmModal({
   title = 'Are you sure?',
   message = '',
@@ -131,10 +114,7 @@ function showConfirmModal({
   });
 }
 
-/**
- * Drop-in replacement for window.alert(). Shows a single-button
- * themed modal and resolves once the user dismisses it.
- */
+
 function showAlertModal(message, title = 'Notice') {
   return showConfirmModal({ title, message, okText: 'OK', showCancel: false });
 }
@@ -142,7 +122,7 @@ function showAlertModal(message, title = 'Notice') {
 // ---------- Dashboard Home Stats Fetcher ----------
 async function updateHomeStats() {
   try {
-    const response = await fetch('http://localhost:5000/api/quizzes');
+    const response = await fetch('https://esteban-portfolio-krio.onrender.com/api/quizzes');
     const quizzes = await response.json();
 
     if (!Array.isArray(quizzes)) return;
@@ -173,7 +153,7 @@ async function updateHomeStats() {
 // ---------- Fetch Quizzes from MySQL & Render Filtered & Sorted HTML ----------
 async function fetchQuizzes() {
   try {
-    const response = await fetch('http://localhost:5000/api/quizzes');
+    const response = await fetch('https://esteban-portfolio-krio.onrender.com/api/quizzes');
     const quizzes = await response.json();
 
     // Select the correct container depending on the active tab category
@@ -306,7 +286,7 @@ async function uploadCardPhoto(quizId) {
   formData.append('image', fileInput.files[0]);
 
   try {
-    const response = await fetch(`http://localhost:5000/api/quizzes/${quizId}/upload`, {
+    const response = await fetch(`https://esteban-portfolio-krio.onrender.com/api/quizzes/${quizId}/upload`, {
       method: 'POST',
       body: formData
     });
@@ -341,7 +321,7 @@ async function removeSinglePhoto(quizId, index, imagesArray, skipConfirm = false
   const updatedImages = imagesArray.filter((_, i) => i !== index);
 
   try {
-    const response = await fetch(`http://localhost:5000/api/quizzes/${quizId}/photo`, {
+    const response = await fetch(`https://esteban-portfolio-krio.onrender.com/api/quizzes/${quizId}/photo`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image_url: JSON.stringify(updatedImages) })
@@ -372,7 +352,7 @@ async function deleteCard(quizId) {
   if (!confirmed) return;
 
   try {
-    const response = await fetch(`http://localhost:5000/api/quizzes/${quizId}`, {
+    const response = await fetch(`https://esteban-portfolio-krio.onrender.com/api/quizzes/${quizId}`, {
       method: 'DELETE'
     });
 
@@ -424,11 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalImg = document.getElementById('modal-img');
   const closeImageModal = document.getElementById('close-image-modal');
 
-  // Create navigation arrows + a delete button dynamically if they don't exist yet
-  // inside the image-modal. All three attach to the inner ".modal-content" box,
-  // and THAT gets position:relative — not the outer "imageModal" overlay — so
-  // imageModal's CSS position:fixed (which centers the whole overlay on screen)
-  // is never overridden.
+
   const imageModalContent = imageModal ? imageModal.querySelector('.modal-content') : null;
 
   if (imageModalContent && !document.getElementById('modal-prev-btn')) {
@@ -514,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const checkRes = await fetch('http://localhost:5000/api/quizzes');
+        const checkRes = await fetch('https://esteban-portfolio-krio.onrender.com/api/quizzes');
         const existingQuizzes = await checkRes.json();
 
         const targetCat = currentCategory.toLowerCase();
@@ -576,7 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const category = document.getElementById('quiz-category').value;
 
       try {
-        const response = await fetch('http://localhost:5000/api/quizzes', {
+        const response = await fetch('https://esteban-portfolio-krio.onrender.com/api/quizzes', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ title, category })
